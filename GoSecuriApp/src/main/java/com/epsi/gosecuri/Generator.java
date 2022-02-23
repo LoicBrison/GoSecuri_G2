@@ -58,29 +58,26 @@ public class Generator {
     private void createHomePage(){
         try{
             //Récupération du template html
-            //File htmlTemplateFile = new File(this.htmlDirPath+"template.html");
-            //String htmlString = FileUtils.readFileToString(htmlTemplateFile);
+            String logo = "../ressourceFiles/GoSecuri.png";
             String htmlString = Files.readString(Paths.get(this.htmlDirPath+"template.html"));
             
             //Initialisation des variables avec le contenu à ajouter
             String title = "Accueil";
             
-            String header = "<h1><a href=\"index.html\">" +
-                                "<font size=\"6\"" +
-                                " face=\"verdana\"" +
-                                " color=\"white\">" +
-                                    "Accueil" +
-                                "</font>" +
-                            "</a></h1>";
+            String header = "<div class=\"w3-display-topleft w3-padding-large w3-xlarge\">\n" +
+"                               <a href=\"index.html\"><img src=\""+logo+"\"></a>\n" +
+"                           </div>";
             
             String htmlAgentList = this.createHtmlAgentList();
-            String body = "<div style=\"margin-left: 40%; margin-top: 10%; margin-right: 2%; width: 50%;\" class=\"container border border-success\">"+
-                    htmlAgentList+"</div>";
+            String body = "<div class=\"bgimg w3-display-container w3-animate-opacity w3-text-white\">\n" + header +
+                            htmlAgentList+
+                            "<div class=\"w3-display-bottomleft w3-padding-large fonct text\">\n" +
+                "                Create by Loic BRISON, Tom LABOUR, Melvin ROBIN\n" +
+                "            </div>\n" +
+                "        </div>";
             
             //Ajoute le contenu dans la page Html
             htmlString = htmlString.replace("$title", title);
-            htmlString = htmlString.replace("$logo", "../ressourceFiles/GoSecuri.png");
-            htmlString = htmlString.replace("$header", header);
             htmlString = htmlString.replace("$body", body);
             
             //Création du fichier Html
@@ -98,14 +95,14 @@ public class Generator {
      * @return 
      */
     private String createHtmlAgentList(){
-        String res = "<h3>Liste des agents</h3>";
-        res += "<div class=\"container\">"
-                + "<div class=\"row\">"
-                + "<ul class=\"col align-self-center\">";
+        String res = "<div class=\"w3-display-middle\">\n" +
+        "    <h1 class=\"w3-jumbo w3-animate-top fonct text\">Liste des agents</h1>\n";
         for(Agent agent:this.agentList){
-            res += "<li><a href=\""+agent.getFileName()+".html\">"+agent.getIdentity()+"</a></li>";
+            res +=  "    <hr class=\"w3-border-grey\" style=\"margin:auto;width:40%\">\n" +
+        "    <p class=\"w3-large w3-center fonct text\"><a class=\"fonct text\" href=\""+agent.getFileName()+".html\">"+agent.getIdentity()+"</a></p>\n";
         }
-        return res+"<ul></div></div>";
+        res+="</div>";
+        return res;
     }
     
     /**
@@ -115,25 +112,25 @@ public class Generator {
         for(Agent agent:this.agentList){
             try{
                 //Récupération du template html
+                String logo = "../ressourceFiles/GoSecuri.png";
                 String htmlString = Files.readString(Paths.get(this.htmlDirPath+"template.html"));
 
                 //Initialisation des variables avec le contenu à ajouter
                 String title = agent.getIdentity()+" - Fiche agent";
 
-                String header = "<h1><a href=\"index.html\">" +
-                                    "<font size=\"6\"" +
-                                    " face=\"verdana\"" +
-                                    " color=\"white\">" +
-                                        "Accueil" +
-                                    "</font>" +
-                                "</a></h1>";
+                String header = "<div class=\"w3-display-topleft w3-padding-large w3-xlarge\">\n" +
+"                               <a href=\"index.html\"><img src=\""+logo+"\"></a>\n" +
+"                           </div>";
 
-                String body = this.createAndLoadStuffList(agent);
+                 String body = "<div class=\"bgimg w3-display-container w3-animate-opacity w3-text-white\">\n" + header +
+                            this.createAndLoadStuffList(agent)+
+                            "<div class=\"w3-display-bottomleft w3-padding-large fonct text\">\n" +
+                "                Create by Loic BRISON, Tom LABOUR, Melvin ROBIN\n" +
+                "            </div>\n" +
+                "        </div>";
 
                 //Ajoute le contenu dans la page Html
                 htmlString = htmlString.replace("$title", title);
-                htmlString = htmlString.replace("$logo", "ressourceFiles/GoSecuri.png");
-                htmlString = htmlString.replace("$header", header);
                 htmlString = htmlString.replace("$body", body);
 
                 //Création du fichier Html
@@ -160,8 +157,8 @@ public class Generator {
             if(agentStuffList.contains(this.stuffList.get(stuff))){
                 stuffList += "<li>\n" +
 "                        \n" +
-"                        <input class=\"form-check-input bg-success\" type=\"checkbox\" value=\"\" id=\"defaultCheck"+index+"\" disabled checked>\n" +
-"                        <label class=\"form-check-label\" for=\"defaultCheck"+index+"\">\n" +
+"                        <input class=\"form-check-input bg-success vert\" type=\"checkbox\" value=\"\" id=\"defaultCheck"+index+"\" disabled checked>\n" +
+"                        <label class=\"form-check-label vert fonct text\" for=\"defaultCheck"+index+"\">\n" +
 "                            "+this.stuffList.get(stuff)+"\n" +
 "                        </label>\n" +
 "                          \n" +
@@ -169,8 +166,8 @@ public class Generator {
             }else{
                 stuffList += "<li>\n" +
 "                        \n" +
-"                        <input class=\"form-check-input bg-success\" type=\"checkbox\" value=\"\" id=\"defaultCheck"+index+"\" disabled>\n" +
-"                        <label class=\"form-check-label\" for=\"defaultCheck"+index+"\">\n" +
+"                        <input class=\"form-check-input bg-success bleu\" type=\"checkbox\" value=\"\" id=\"defaultCheck"+index+"\" disabled>\n" +
+"                        <label class=\"form-check-label bleu fonct text\" for=\"defaultCheck"+index+"\">\n" +
 "                            "+this.stuffList.get(stuff)+"\n" +
 "                        </label>\n" +
 "                          \n" +
