@@ -122,7 +122,7 @@ public class Generator {
 "                               <a href=\"index.html\"><img src=\""+logo+"\"></a>\n" +
 "                           </div>";
 
-                 String body = "<div class=\"bgimg w3-display-container w3-animate-opacity w3-text-white\">\n" + header +
+                 String body = "<div class=\"main w3-display-container w3-animate-opacity w3-text-white\">\n" + header +
                             this.createAndLoadStuffList(agent)+
                             "<div class=\"w3-display-bottomleft w3-padding-large fonct text\">\n" +
                 "                Create by Loic BRISON, Tom LABOUR, Melvin ROBIN\n" +
