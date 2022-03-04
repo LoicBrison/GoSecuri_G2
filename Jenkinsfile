@@ -23,12 +23,14 @@ pipeline {
     }
 
     stage('Deploy') {
+      /*
       agent {
         docker {
           image 'gosecuri:latest'
           args '-u root --privileged'
         }
       }
+      */
       steps {
         
         //sh 'pwd && cat /etc/nginx/conf.d/default.conf'
