@@ -6,8 +6,10 @@
 package com.epsi.gosecuri.Threads;
 
 import com.epsi.gosecuri.Agent;
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
@@ -71,7 +73,10 @@ public class HomePageThread implements Runnable{
             //Création du fichier Html
             //File newHtmlFile = new File(this.generatedFilesDirPath+"index.html");
             //FileUtils.writeStringToFile(newHtmlFile, htmlString);
-            Files.write(Paths.get(this.generatedFilesDirPath+"index.html"),htmlString.getBytes());
+            File index = new File(this.generatedFilesDirPath+"index.html");
+            if(!index.createNewFile()){
+                Files.write(Paths.get(this.generatedFilesDirPath+"index.html"),htmlString.getBytes());
+            }
         }
         catch(IOException e){
             e.printStackTrace();
