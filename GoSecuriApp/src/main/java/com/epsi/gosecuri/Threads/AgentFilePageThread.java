@@ -95,8 +95,8 @@ public class AgentFilePageThread implements Runnable{
             if(agentStuffList.contains(this.stuffList.get(stuff))){
                 stuffList += "<li>\n" +
 "                        \n" +
-"                        <input class=\"form-check-input bg-success vert\" type=\"checkbox\" value=\"\" id=\"defaultCheck"+index+"\" disabled checked>\n" +
-"                        <label class=\"form-check-label vert fonct text\" for=\"defaultCheck"+index+"\">\n" +
+"                        <input class=\"form-check-input bg-success \" type=\"checkbox\" value=\"\" id=\"defaultCheck"+index+"\" disabled checked>\n" +
+"                        <label class=\"form-check-label fonct text\" for=\"defaultCheck"+index+"\">\n" +
 "                            "+this.stuffList.get(stuff)+"\n" +
 "                        </label>\n" +
 "                          \n" +
@@ -104,8 +104,8 @@ public class AgentFilePageThread implements Runnable{
             }else{
                 stuffList += "<li>\n" +
 "                        \n" +
-"                        <input class=\"form-check-input bg-success bleu\" type=\"checkbox\" value=\"\" id=\"defaultCheck"+index+"\" disabled>\n" +
-"                        <label class=\"form-check-label bleu fonct text\" for=\"defaultCheck"+index+"\">\n" +
+"                        <input class=\"form-check-input bg-success \" type=\"checkbox\" value=\"\" id=\"defaultCheck"+index+"\" disabled>\n" +
+"                        <label class=\"form-check-label fonct text\" for=\"defaultCheck"+index+"\">\n" +
 "                            "+this.stuffList.get(stuff)+"\n" +
 "                        </label>\n" +
 "                          \n" +
