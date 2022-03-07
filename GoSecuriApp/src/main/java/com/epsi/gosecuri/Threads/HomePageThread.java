@@ -73,7 +73,9 @@ public class HomePageThread implements Runnable{
             //Création du fichier Html
             //File newHtmlFile = new File(this.generatedFilesDirPath+"index.html");
             //FileUtils.writeStringToFile(newHtmlFile, htmlString);
+            System.out.println(this.generatedFilesDirPath+"index.html");
             File index = new File(this.generatedFilesDirPath+"index.html");
+            index.createNewFile();
             if(!index.createNewFile()){
                 Files.write(Paths.get(this.generatedFilesDirPath+"index.html"),htmlString.getBytes());
             }
