@@ -5,6 +5,8 @@
  */
 package com.epsi.gosecuri;
 
+import com.epsi.gosecuri.Threads.AgentFilePageThread;
+import com.epsi.gosecuri.Threads.HomePageThread;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -48,135 +50,10 @@ public class Generator {
         this.readStuffFile();
         this.readStaffFile();
         this.readAgentFile();
-        this.createAgentFilePage();
-        this.createHomePage();
-    }
-    
-    /**
-     * Créer la page d'accueil.
-     */
-    private void createHomePage(){
-        try{
-            //Récupération du template html
-            String logo = "../ressourceFiles/GoSecuri.png";
-            String htmlString = Files.readString(Paths.get(this.htmlDirPath+"template.html"));
-            
-            //Initialisation des variables avec le contenu à ajouter
-            String title = "Accueil";
-            
-            String header = "<div class=\"w3-display-topleft w3-padding-large w3-xlarge\">\n" +
-"                               <a href=\"index.html\"><img src=\""+logo+"\"></a>\n" +
-"                           </div>";
-            
-            String htmlAgentList = this.createHtmlAgentList();
-            String body = "<div class=\"main w3-display-container w3-animate-opacity w3-text-white\">\n" + header +
-                            htmlAgentList+
-                            "<div class=\"w3-display-bottomleft w3-padding-large fonct text\">\n" +
-                "                Create by Loic BRISON, Tom LABOUR, Melvin ROBIN\n" +
-                "            </div>\n" +
-                "        </div>";
-            
-            //Ajoute le contenu dans la page Html
-            htmlString = htmlString.replace("$title", title);
-            htmlString = htmlString.replace("$body", body);
-            
-            //Création du fichier Html
-            //File newHtmlFile = new File(this.generatedFilesDirPath+"index.html");
-            //FileUtils.writeStringToFile(newHtmlFile, htmlString);
-            Files.write(Paths.get(this.generatedFilesDirPath+"index.html"),htmlString.getBytes());
-        }
-        catch(IOException e){
-            e.printStackTrace();
-        }
-    }
-    
-    /**
-     * Créer une liste Html avec des liens pour chaque agent
-     * @return 
-     */
-    private String createHtmlAgentList(){
-        String res = "<div class=\"w3-display-middle\">\n" +
-        "    <h1 class=\"w3-jumbo w3-animate-top fonct text\">Liste des agents</h1>\n";
-        for(Agent agent:this.agentList){
-            res +=  "    <hr class=\"w3-border-grey\" style=\"margin:auto;width:40%\">\n" +
-        "    <p class=\"w3-large w3-center fonct text\"><a class=\"fonct text\" href=\""+agent.getFileName()+".html\">"+agent.getIdentity()+"</a></p>\n";
-        }
-        res+="</div>";
-        return res;
-    }
-    
-    /**
-     * Créer les différentes fiches d'agents
-     */
-    private void createAgentFilePage(){
-        for(Agent agent:this.agentList){
-            try{
-                //Récupération du template html
-                String logo = "../ressourceFiles/GoSecuri.png";
-                String htmlString = Files.readString(Paths.get(this.htmlDirPath+"template.html"));
-
-                //Initialisation des variables avec le contenu à ajouter
-                String title = agent.getIdentity()+" - Fiche agent";
-
-                String header = "<div class=\"w3-display-topleft w3-padding-large w3-xlarge\">\n" +
-"                               <a href=\"index.html\"><img src=\""+logo+"\"></a>\n" +
-"                           </div>";
-
-                 String body = "<div class=\"main w3-display-container w3-animate-opacity w3-text-white\">\n" + header +
-                            this.createAndLoadStuffList(agent)+
-                            "<div class=\"w3-display-bottomleft w3-padding-large fonct text\">\n" +
-                "                Create by Loic BRISON, Tom LABOUR, Melvin ROBIN\n" +
-                "            </div>\n" +
-                "        </div>";
-
-                //Ajoute le contenu dans la page Html
-                htmlString = htmlString.replace("$title", title);
-                htmlString = htmlString.replace("$body", body);
-
-                //Création du fichier Html
-                Files.write(Paths.get(this.generatedFilesDirPath+agent.getFileName()+".html"),htmlString.getBytes());
-            }
-            catch(IOException e){
-                e.printStackTrace();
-            }
-        }
-    }
-    
-    /**
-     * Créer une liste de checkBox initialiser 
-     * avec les valeurs de l'agent passer en paramètre
-     * @param agent
-     * @return 
-     */
-    private String createAndLoadStuffList(Agent agent){
-        String htmlString=agent.generateAgentFile();
-        ArrayList<String> agentStuffList = agent.getStuffList();
-        String stuffList="<ul>";
-        int index=0;
-        for(String stuff:this.stuffList.keySet()){
-            if(agentStuffList.contains(this.stuffList.get(stuff))){
-                stuffList += "<li>\n" +
-"                        \n" +
-"                        <input class=\"form-check-input bg-success vert\" type=\"checkbox\" value=\"\" id=\"defaultCheck"+index+"\" disabled checked>\n" +
-"                        <label class=\"form-check-label vert fonct text\" for=\"defaultCheck"+index+"\">\n" +
-"                            "+this.stuffList.get(stuff)+"\n" +
-"                        </label>\n" +
-"                          \n" +
-"                    </li>";
-            }else{
-                stuffList += "<li>\n" +
-"                        \n" +
-"                        <input class=\"form-check-input bg-success bleu\" type=\"checkbox\" value=\"\" id=\"defaultCheck"+index+"\" disabled>\n" +
-"                        <label class=\"form-check-label bleu fonct text\" for=\"defaultCheck"+index+"\">\n" +
-"                            "+this.stuffList.get(stuff)+"\n" +
-"                        </label>\n" +
-"                          \n" +
-"                    </li>";
-            }
-            index++;
-        }
-        htmlString = htmlString.replace("$stufflist", stuffList);
-        return htmlString;
+        HomePageThread hpThread = new HomePageThread(htmlDirPath,generatedFilesDirPath,agentList);
+        AgentFilePageThread afpThread = new AgentFilePageThread(agentList,htmlDirPath,generatedFilesDirPath,stuffList);
+        hpThread.start();
+        afpThread.start();
     }
     
     /**
@@ -339,8 +216,4 @@ public class Generator {
             Logger.getLogger(Generator.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    
-      
-
 }
