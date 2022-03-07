@@ -35,9 +35,9 @@ import org.apache.commons.io.FileUtils;
 public class Generator {
     
     //Chemin relatif pour le dossier ressource
-    private final String ressourceDirPath = "src/main/java/com/epsi/gosecuri/ressourceFiles/";
-    private final String htmlDirPath = "src/main/java/com/epsi/gosecuri/htmlFiles/";
-    private final String generatedFilesDirPath = "src/main/java/com/epsi/gosecuri/generatedFiles/";
+    private final String ressourceDirPath = "./src/main/java/com/epsi/gosecuri/ressourceFiles/";
+    private final String htmlDirPath = "./src/main/java/com/epsi/gosecuri/htmlFiles/";
+    private final String generatedFilesDirPath = "./src/main/java/com/epsi/gosecuri/generatedFiles/";
     private final String staffFile = "staff.txt";
     private final String stuffFile = "liste.txt";
     
