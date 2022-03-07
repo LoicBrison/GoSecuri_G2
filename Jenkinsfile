@@ -10,7 +10,7 @@ pipeline {
     stage('Run') {
       steps {
         sh 'cd GoSecuriApp && java -jar target/GoSecuriApp-1.0-SNAPSHOT.jar'
-        sh 'ls -la GoSecuriApp/'
+        sh 'ls -la GoSecuriApp/src/main/java/com/epsi/gosecuri/'
         
         sh 'cp GoSecuriApp/src/main/java/com/epsi/gosecuri/generatedFiles/.htpasswd   $HOME/gosecurig2/'
         sh 'cp GoSecuriApp/src/main/java/com/epsi/gosecuri/generatedFiles/*  $HOME/gosecurig2/'
