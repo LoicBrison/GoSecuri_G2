@@ -5,6 +5,8 @@
  */
 package com.epsi.gosecuri;
 
+import com.epsi.gosecuri.Threads.AgentFilePageThread;
+import com.epsi.gosecuri.Threads.HomePageThread;
 import java.io.IOException;
 
 /**
@@ -15,6 +17,14 @@ public class App {
     
     public static void main (String[] args) throws IOException{
         Generator gene = new Generator();
+        gene.initHtpasswd();
+        gene.readStuffFile();
+        gene.readStaffFile();
+        gene.readAgentFile();
+        HomePageThread hpThread = new HomePageThread(gene.getHtmlDirPath(),gene.getGeneratedFilesDirPath(),gene.getAgentList());
+        AgentFilePageThread afpThread = new AgentFilePageThread(gene.getAgentList(),gene.getHtmlDirPath(),gene.getGeneratedFilesDirPath(),gene.getStuffList());
+        hpThread.start();
+        afpThread.start();
     }
     
 }

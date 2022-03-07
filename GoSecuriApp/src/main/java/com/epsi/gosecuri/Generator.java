@@ -46,20 +46,13 @@ public class Generator {
     private HashMap<String,String> stuffList = new HashMap<>();
     
     public Generator() throws IOException{
-        this.initHtpasswd();
-        this.readStuffFile();
-        this.readStaffFile();
-        this.readAgentFile();
-        HomePageThread hpThread = new HomePageThread(htmlDirPath,generatedFilesDirPath,agentList);
-        AgentFilePageThread afpThread = new AgentFilePageThread(agentList,htmlDirPath,generatedFilesDirPath,stuffList);
-        hpThread.start();
-        afpThread.start();
+        
     }
     
     /**
      * Créer la liste d'agent
      */
-    private void readAgentFile(){
+    public void readAgentFile(){
         //Variable pour la création d'un agent
         String nom = "";
         String prenom = "";
@@ -119,6 +112,9 @@ public class Generator {
             }
         }
         
+        this.agentList.sort((a1,a2)
+           -> a1.getIdentity().compareTo(a2.getIdentity()));
+        
         //Ligne ci dessous uniquement pour debug
         System.out.println(this.agentList.toString());
     }
@@ -126,7 +122,7 @@ public class Generator {
     /**
      * Créer la liste des différents matériels
      */
-    private void readStuffFile(){
+    public void readStuffFile(){
         try{
             // Le fichier d'entrée
             File lcStaffFile = new File(this.ressourceDirPath+this.stuffFile); // Pour releas
@@ -168,7 +164,7 @@ public class Generator {
     /**
      * Créer la liste des différents agents
      */
-    private void readStaffFile(){
+    public void readStaffFile(){
         try{
             // Le fichier d'entrée
             File lcStaffFile = new File(this.ressourceDirPath+this.staffFile); // Pour release
@@ -193,7 +189,7 @@ public class Generator {
         }
     }
     
-    private void initHtpasswd(){
+    public void initHtpasswd(){
         String line = "admin"+":{SHA}"+Base64.getEncoder().encodeToString(DigestUtils.sha1("admin"));
         try {
             Files.writeString(Paths.get(this.generatedFilesDirPath+".htpasswd"),line+"\n");
@@ -203,7 +199,7 @@ public class Generator {
         
     }
     
-    private void generateHtpasswd(Agent agent){
+    public void generateHtpasswd(Agent agent){
         //Création / ou Ecriture du fichier htpasswd
         String line = agent.getUsername()+":{SHA}"+Base64.getEncoder().encodeToString(DigestUtils.sha1(agent.getPassword()));
         try {
@@ -215,5 +211,37 @@ public class Generator {
         } catch (IOException ex) {
             Logger.getLogger(Generator.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+     public String getRessourceDirPath() {
+        return ressourceDirPath;
+    }
+
+    public String getHtmlDirPath() {
+        return htmlDirPath;
+    }
+
+    public String getGeneratedFilesDirPath() {
+        return generatedFilesDirPath;
+    }
+
+    public String getStaffFile() {
+        return staffFile;
+    }
+
+    public String getStuffFile() {
+        return stuffFile;
+    }
+
+    public ArrayList<Agent> getAgentList() {
+        return agentList;
+    }
+
+    public ArrayList<String> getAgentNameList() {
+        return agentNameList;
+    }
+
+    public HashMap<String, String> getStuffList() {
+        return stuffList;
     }
 }
