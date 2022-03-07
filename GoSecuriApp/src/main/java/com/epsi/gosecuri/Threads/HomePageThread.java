@@ -83,6 +83,9 @@ public class HomePageThread implements Runnable{
      * @return 
      */
     private String createHtmlAgentList(){
+        this.agentList.sort((a1,a2)
+            -> a1.getIdentity().compareTo(a2.getIdentity()));
+        
         String res = "<div class=\"w3-display-middle\">\n" +
         "    <h1 class=\"w3-jumbo w3-animate-top fonct text\">Liste des agents</h1>\n";
         for(Agent agent:this.agentList){
