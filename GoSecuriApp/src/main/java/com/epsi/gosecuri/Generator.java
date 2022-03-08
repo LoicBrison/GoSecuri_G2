@@ -41,12 +41,14 @@ public class Generator {
     private final String staffFile = "staff.txt";
     private final String stuffFile = "liste.txt";
     
-    private ArrayList<Agent> agentList = new ArrayList<>();
-    private ArrayList<String> agentNameList = new ArrayList<>();
-    private HashMap<String,String> stuffList = new HashMap<>();
+    private ArrayList<Agent> agentList;
+    private ArrayList<String> agentNameList;
+    private HashMap<String,String> stuffList;
     
     public Generator() throws IOException{
-        
+        agentList = new ArrayList<>();
+        agentNameList = new ArrayList<>();
+        stuffList = new HashMap<>();
     }
     
     /**
